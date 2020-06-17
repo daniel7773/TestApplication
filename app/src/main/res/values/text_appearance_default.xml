@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="TextAppearance.Default" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_medium_20</item>
+    </style>
+
+    <!-- Regular -->
+    <style name="TextAppearance.Default.Regular">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.Default.Regular.Medium_14">
+        <item name="android:textSize">@dimen/text_medium_14</item>
+    </style>
+
+    <style name="TextAppearance.Default.Regular.Medium_16">
+        <item name="android:textSize">@dimen/text_medium_16</item>
+    </style>
+
+    <style name="TextAppearance.Default.Regular.Medium_18">
+        <item name="android:textSize">@dimen/text_medium_18</item>
+    </style>
+
+    <style name="TextAppearance.Default.Regular.Medium_20">
+        <item name="android:textSize">@dimen/text_medium_20</item>
+    </style>
+    <style name="TextAppearance.Default.Regular.Medium_24">
+        <item name="android:textSize">@dimen/text_medium_24</item>
+    </style>
+
+    <!-- Bold -->
+    <style name="TextAppearance.Default.Bold">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Default.Bold.XSmall_16">
+        <item name="android:textSize">@dimen/text_medium_16</item>
+    </style>
+
+    <style name="TextAppearance.Default.Bold.Medium_20">
+        <item name="android:textSize">@dimen/text_medium_20</item>
+    </style>
+
+    <style name="TextAppearance.Default.Regular.Medium_24.White">
+        <item name="android:textSize">@dimen/text_medium_24</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+
+</resources>

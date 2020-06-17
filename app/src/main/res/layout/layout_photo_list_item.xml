@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="6dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:translationZ="8dp">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.testapp.views.SquareImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="52dp"
+            android:minHeight="52dp" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminate="false"
+            android:translationZ="6dp"
+            android:elevation="6dp"
+            android:layout_gravity="center"
+            android:minHeight="54dp"
+            android:max="100"/>
+    </FrameLayout>
+
+
+    <TextView
+        style="@style/TextAppearance.Default.Regular.Medium_18"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_rounded"
+        android:gravity="center"
+        android:text="this is photo comment"
+        android:textColor="#000" />
+
+</LinearLayout>

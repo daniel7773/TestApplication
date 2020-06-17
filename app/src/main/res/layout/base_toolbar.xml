@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    app:layout_scrollFlags="scroll|enterAlways|snap">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="32dp">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_arrow_back_white_24dp"
+            android:visibility="gone" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.Default.Regular.Medium_24.White"
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textColor="@color/white"/>
+    </FrameLayout>
+</androidx.appcompat.widget.Toolbar>
+
+

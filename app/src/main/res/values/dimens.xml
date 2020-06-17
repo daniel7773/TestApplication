@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="corner_round">12dp</dimen>
+    <dimen name="text_medium_24">24sp</dimen>
+    <dimen name="text_medium_20">20sp</dimen>
+    <dimen name="text_medium_18">18sp</dimen>
+    <dimen name="text_medium_16">16sp</dimen>
+    <dimen name="text_medium_14">14sp</dimen>
+</resources>
