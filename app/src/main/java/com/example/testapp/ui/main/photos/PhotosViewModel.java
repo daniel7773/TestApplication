@@ -32,9 +32,10 @@ public class PhotosViewModel extends ViewModel {
 
     boolean isQueryExhausted = false;
     boolean isPerformingQuery = false;
-    int pageNumber = 1;
+    int albumId = 1;
     String QUERY_EXHAUSTED = "No more results";
     private boolean cancelRequest = false;
+    private long requestStartTime = 0;
 
 
     @Inject
@@ -44,11 +45,11 @@ public class PhotosViewModel extends ViewModel {
         Log.d(TAG, "PostsViewModel: viewmodel is working...");
     }
 
-    public void searchPhotos(int _pageNumber) {
-        pageNumber = _pageNumber;
+    public void searchPhotos(int _albumId) {
+        albumId = _albumId;
         if (!isPerformingQuery) {
-            if (_pageNumber == 0) {
-                pageNumber = 1;
+            if (_albumId == 0) {
+                albumId = 1;
             }
             isQueryExhausted = false;
             executeSearch();
@@ -56,22 +57,43 @@ public class PhotosViewModel extends ViewModel {
 
     }
 
-    public void searchNextPage() {
+    public void searchNextAlbum() {
         if (!isQueryExhausted && !isPerformingQuery) {
-            pageNumber += 1;
+            albumId += 1;
+            albumId = correctAlbumId(albumId);
             executeSearch();
         }
     }
 
+    private int correctAlbumId(int albumId) {
+        int fixedAlbumId = 1;
+        try {
+            int userId = sessionManager.getAuthUser().getValue().data.getId();
+            fixedAlbumId = albumId;
+            if (userId > 1) {
+                fixedAlbumId = fixedAlbumId + 10;
+            }
+            if (fixedAlbumId >= userId * 10) {
+                isQueryExhausted = true;
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "error while loading photos related to user");
+            sessionManager.logOut();
+        }
+        return fixedAlbumId;
+    }
+
     public void executeSearch() {
+        requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
         final LiveData<Resource<List<Photo>>> source = LiveDataReactiveStreams.fromPublisher(
 
-                mainApi.getPhotosFromUser(id)
+                mainApi.getPhotosFromUser(albumId)
 
                         .onErrorReturn(throwable -> {
-                            Log.e(TAG, "apply: ", throwable);
+                            Log.d(TAG, "albumId: " + albumId);
+                            Log.e(TAG, "exception when getting photos: ", throwable);
                             Photo photo = new Photo();
                             photo.setId(-1);
                             ArrayList<Photo> photos = new ArrayList<>();
@@ -101,7 +123,7 @@ public class PhotosViewModel extends ViewModel {
             if (!cancelRequest) {
                 if (listResource != null) {
                     photos.setValue(listResource);
-                    Log.d(TAG, "request time: + ${(System.currentTimeMillis() - requestStartTime) / 1000}");
+                    Log.d(TAG, "request time: " + ((System.currentTimeMillis() - requestStartTime) / 1000));
                     if (listResource.status == Resource.Status.SUCCESS) {
                         isPerformingQuery = false;
                         if (listResource.data != null) {
@@ -135,7 +157,7 @@ public class PhotosViewModel extends ViewModel {
             Log.d(TAG, "cancel search request: canceling ");
             cancelRequest = true;
             isPerformingQuery = false;
-            pageNumber = 1;
+            albumId = 1;
         }
     }
 }

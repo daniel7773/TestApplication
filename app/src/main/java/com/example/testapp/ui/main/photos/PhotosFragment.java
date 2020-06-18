@@ -86,7 +86,7 @@ public class PhotosFragment extends DaggerFragment {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.searchNextPage();
+                    viewModel.searchNextAlbum();
                 }
             }
         });

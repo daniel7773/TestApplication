@@ -3,7 +3,6 @@ package com.example.testapp.di;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Base64;
 
 import androidx.core.content.ContextCompat;
 
@@ -13,8 +12,8 @@ import com.example.testapp.imageloader.cache.memory.impl.UsingFreqLimitedMemoryC
 import com.example.testapp.imageloader.core.DisplayImageOptions;
 import com.example.testapp.imageloader.core.ImageLoader;
 import com.example.testapp.imageloader.core.ImageLoaderConfiguration;
+import com.example.testapp.imageloader.core.download.BaseImageDownloader;
 import com.example.testapp.models.User;
-import com.example.testapp.util.AuthDownloader;
 import com.example.testapp.util.Constants;
 
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public class AppModule {
                 .threadPoolSize(5)
                 .threadPriority(Thread.MIN_PRIORITY + 2)
                 .denyCacheImageMultipleSizesInMemory()
-                .imageDownloader(new AuthDownloader(application))
+                .imageDownloader(new BaseImageDownloader(application, 15 * 1000, 30 * 1000))
                 .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // 2 Mb
                 .discCacheFileNameGenerator(new HashCodeFileNameGenerator())
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
