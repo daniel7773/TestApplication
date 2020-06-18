@@ -45,6 +45,12 @@ public class PhotosViewModel extends ViewModel {
 
     CompositeDisposable localCompositeSubscription = null;
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        localCompositeSubscription.clear();
+    }
+
     @Inject
     public PhotosViewModel(SessionManager sessionManager, MainApi mainApi) {
         localCompositeSubscription = new CompositeDisposable();
