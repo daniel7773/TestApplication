@@ -7,12 +7,7 @@ import android.graphics.drawable.Drawable;
 import androidx.core.content.ContextCompat;
 
 import com.example.testapp.R;
-import com.example.testapp.imageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.example.testapp.imageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.example.testapp.imageloader.core.DisplayImageOptions;
-import com.example.testapp.imageloader.core.ImageLoader;
-import com.example.testapp.imageloader.core.ImageLoaderConfiguration;
-import com.example.testapp.imageloader.core.download.BaseImageDownloader;
 import com.example.testapp.models.User;
 import com.example.testapp.util.Constants;
 
@@ -43,21 +38,6 @@ public class AppModule {
 
     @Singleton
     @Provides
-    static ImageLoaderConfiguration provideImageLoaderConfiguration(Application application) {
-        return new ImageLoaderConfiguration.Builder(application)
-                .memoryCacheExtraOptions(480, 800) // width, height
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .imageDownloader(new BaseImageDownloader(application, 15 * 1000, 30 * 1000))
-                .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // 2 Mb
-                .discCacheFileNameGenerator(new HashCodeFileNameGenerator())
-                .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-                .build();
-    }
-
-    @Singleton
-    @Provides
     static DisplayImageOptions provideDisplayImageOptions() {
         Map<String, String> headers = new HashMap();
         headers.put("User-Agent", "default-user-agent");
@@ -72,14 +52,6 @@ public class AppModule {
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .extraForDownloader(headers)
                 .build();
-    }
-
-    @Singleton
-    @Provides
-    static ImageLoader provideImageLoaderInstance(ImageLoaderConfiguration configuration) {
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        ImageLoader.getInstance().init(configuration);
-        return imageLoader;
     }
 
     @Singleton

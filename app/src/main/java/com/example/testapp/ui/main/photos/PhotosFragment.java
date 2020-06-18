@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapp.R;
+import com.example.testapp.imageloader.core.DisplayImageOptions;
+import com.example.testapp.imageloader.core.ImageLoader;
+import com.example.testapp.imageloader.core.ImageLoaderConfiguration;
 import com.example.testapp.util.VerticalSpacingItemDecoration;
 import com.example.testapp.viewmodels.ViewModelProviderFactory;
 
@@ -26,6 +29,8 @@ public class PhotosFragment extends DaggerFragment {
     private RecyclerView recyclerView;
 
     @Inject
+    DisplayImageOptions displayImageOptions;
+
     PhotosRecyclerAdapter adapter;
 
     @Inject
@@ -33,6 +38,8 @@ public class PhotosFragment extends DaggerFragment {
 
     @Inject
     PhotosViewModel viewModel;
+
+    ImageLoaderConfiguration imageLoaderConfiguration;
 
     @Nullable
     @Override
@@ -44,9 +51,11 @@ public class PhotosFragment extends DaggerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.recycler_view);
 
+        adapter = new PhotosRecyclerAdapter(imageLoaderConfiguration, displayImageOptions, ImageLoader.getInstance());
+
         initRecyclerView();
         subscribeObervers();
-        viewModel.searchPhotos(1);
+        viewModel.searchAlbums();
     }
 
     private void subscribeObervers() {

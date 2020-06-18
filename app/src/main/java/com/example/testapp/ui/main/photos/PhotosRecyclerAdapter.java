@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testapp.R;
 import com.example.testapp.imageloader.core.DisplayImageOptions;
 import com.example.testapp.imageloader.core.ImageLoader;
+import com.example.testapp.imageloader.core.ImageLoaderConfiguration;
 import com.example.testapp.imageloader.core.assist.FailReason;
 import com.example.testapp.imageloader.core.listener.SimpleImageLoadingListener;
 import com.example.testapp.models.Photo;
@@ -21,18 +22,17 @@ import com.example.testapp.views.SquareImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 
 public class PhotosRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ImageLoader imageLoader;
     DisplayImageOptions displayImageOptions;
+    ImageLoaderConfiguration imageLoaderConfiguration;
+    ImageLoader imageLoader;
 
-    @Inject
-    public PhotosRecyclerAdapter(ImageLoader imageLoader, DisplayImageOptions displayImageOptions) {
-        this.imageLoader = imageLoader;
+    public PhotosRecyclerAdapter(ImageLoaderConfiguration imageLoaderConfiguration, DisplayImageOptions displayImageOptions, ImageLoader imageLoader) {
         this.displayImageOptions = displayImageOptions;
+        this.imageLoaderConfiguration = imageLoaderConfiguration;
+        this.imageLoader = imageLoader;
     }
 
     private List<Photo> photos = new ArrayList<>();
@@ -46,7 +46,7 @@ public class PhotosRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((PhotosViewHolder) holder).bind(photos.get(position), position > photos.size() - 2);
+        ((PhotosViewHolder) holder).bind(photos.get(position));
     }
 
     @Override
@@ -76,16 +76,11 @@ public class PhotosRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             progressBar = itemView.findViewById(R.id.progress);
         }
 
-        public void bind(Photo photo, boolean isLast) {
+        public void bind(Photo photo) {
             title.setText(photo.getTitle());
 
-
-//            GlideUrl url = new GlideUrl(photo.getUrl(), new LazyHeaders.Builder()
-//                    .addHeader("User-Agent", "default-user-agent")
-//                    .build());
-
             imageLoader
-                    .displayImage(photo.getUrl(), image, displayImageOptions, new SimpleImageLoadingListener() {
+                    .displayImage(photo.getThumbnailUrl(), image, displayImageOptions, new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {
                             progressBar.setProgress(0);

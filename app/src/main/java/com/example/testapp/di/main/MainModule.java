@@ -15,12 +15,6 @@ public class MainModule {
 
     @MainScope
     @Provides
-    static PhotosRecyclerAdapter provideAdapter(ImageLoader imageLoader, DisplayImageOptions displayImageOptions) {
-        return new PhotosRecyclerAdapter(imageLoader, displayImageOptions);
-    }
-
-    @MainScope
-    @Provides
     static MainApi provideMainApi(Retrofit retrofit) {
         return retrofit.create(MainApi.class);
     }
